@@ -18,6 +18,9 @@ export class VideoControllerComponent implements AfterViewInit {
   @Input() width: string | number | null | undefined;
   @Input() accentColor: string = '#ff2525';
   @Input() startTime:number = 0
+  @Input() allowVolumeControl = true;
+  @Input() allowSpeedControl = true;
+  @Input() allowFullscreen = true;
   @ViewChild('player') _player!: ElementRef<HTMLVideoElement>;
   player!: HTMLVideoElement;
   unpause: number = 0;
@@ -77,6 +80,7 @@ export class VideoControllerComponent implements AfterViewInit {
   }
 
   volumeToggle(elem: HTMLInputElement) {
+    if(!this.allowVolumeControl) return;
     elem.focus();
     if (this.player.volume) {
       this.unpause = this.player.volume;
@@ -97,6 +101,7 @@ export class VideoControllerComponent implements AfterViewInit {
   }
 
   toggleFullscreen(elem: HTMLElement): void {
+    if(!this.allowFullscreen) return;
     if (!!document.fullscreenElement) {
       document.exitFullscreen();
     } else {
